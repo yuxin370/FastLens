@@ -1,0 +1,44 @@
+// ────────────────────────────────────────────────────────
+// |                      FastLanes                       |
+// ────────────────────────────────────────────────────────
+// src/common/assert.cpp
+// ────────────────────────────────────────────────────────
+#include "fls/common/assert.hpp"
+#include <cassert>  // for assert()
+#include <cstdint>  // for uint64_t
+#include <cstdlib>  // for abort()
+#include <iostream> // for std::cerr
+
+namespace fastlanes {
+
+void FlsAssert(const char* expr_str, const char* str, bool expr, const char* file, int line, const char* msg) {
+	if (expr) {
+		return;
+	}
+	std::cerr << "Failed:\t\t" << msg << "\n"
+	          << "Exprsn:\t\t" << expr_str << "\n"
+	          << "Values:\t\t" << str << "\n"
+	          << file << ":" << line << "\n";
+	std::abort();
+}
+
+void DetailedFlsAssert(const char* expr_str, const char* str, bool expr, const char* file, int line, const char* msg) {
+	if (expr) {
+		return;
+	}
+	std::cerr << "Failed:\t\t" << msg << "\n"
+	          << "Exprsn:\t\t" << expr_str
+	          << "\n"
+	          // << "Values:\t\t" << fmt::format("{}", str) << "\n" //TODO[FMT]
+	          << file << ":" << line << "\n";
+	std::abort();
+}
+
+void Assert::NotNullPointer(const void* p) {
+	assert(p != nullptr && "Pointer must not be null");
+}
+
+void Assert::CorrectBW(uint64_t bw) {
+	assert(bw <= 64 && "BW must be greater than zero");
+}
+} // namespace fastlanes

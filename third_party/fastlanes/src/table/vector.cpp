@@ -1,0 +1,15 @@
+// ────────────────────────────────────────────────────────
+// |                      FastLanes                       |
+// ────────────────────────────────────────────────────────
+// src/table/vector.cpp
+// ────────────────────────────────────────────────────────
+#include "fls/table/vector.hpp"
+#include "fls/table/chunk.hpp"
+
+namespace fastlanes {
+
+Vector::Vector(const fls_vec& vector)
+    : internal_vector(vector) {
+}
+
+} // namespace fastlanes

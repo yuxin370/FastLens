@@ -1,0 +1,98 @@
+// ────────────────────────────────────────────────────────
+// |                      FastLanes                       |
+// ────────────────────────────────────────────────────────
+// src/reader/table_reader.cpp
+// ────────────────────────────────────────────────────────
+#include "fls/reader/table_reader.hpp"
+#include "fls/common/alias.hpp"
+#include "fls/csv/csv.hpp"
+#include "fls/encoder/materializer.hpp"
+#include "fls/file/file_footer.hpp"
+#include "fls/file/file_header.hpp"
+#include "fls/footer/table_descriptor.hpp"
+#include "fls/footer/table_descriptor_generated.h"
+#include "fls/reader/rowgroup_reader.hpp"
+#include "fls/std/filesystem.hpp"
+#include "fls/std/string.hpp"
+#include <filesystem>         // std::filesystem::path, exists, is_directory, is_regular_file
+#include <flatbuffers/base.h> // flatbuffers::uoffset_t
+#include <utility>            // std::move
+
+namespace fastlanes {
+
+constexpr static auto const* TABLE_DESCRIPTOR_FILE_NAME {"table_descriptor.fbb"};
+
+up<RowgroupReader> TableReader::get_rowgroup_reader(const n_t rowgroup_idx) const {
+	const TableDescriptor* td     = m_table_descriptor_handle->Get();
+	const auto             fb_idx = static_cast<flatbuffers::uoffset_t>(rowgroup_idx);
+	const auto*            rg     = td->m_rowgroup_descriptors()->Get(fb_idx); // pointer to RowgroupDescriptor (table)
+	return make_unique<RowgroupReader>(m_file_path, *rg, m_connection);
+}
+
+up<Table> TableReader::materialize() const {
+	auto table_up = make_unique<Table>(m_connection);
+
+	const TableDescriptor* td     = m_table_descriptor_handle->Get();
+	const auto*            rg_vec = td->m_rowgroup_descriptors();
+	if (!rg_vec) {
+		return table_up;
+	}
+	const auto n_rgs = rg_vec->size();
+
+	for (flatbuffers::uoffset_t i = 0; i < n_rgs; ++i) {
+		auto rowgroup_up = get_rowgroup_reader(static_cast<n_t>(i))->materialize();
+		table_up->m_rowgroups.push_back(std::move(rowgroup_up));
+	}
+
+	return table_up;
+}
+
+void TableReader::to_csv(const path& file_path) const {
+	const TableDescriptor* td     = m_table_descriptor_handle->Get();
+	const auto*            rg_vec = td->m_rowgroup_descriptors();
+	if (!rg_vec) {
+		return;
+	}
+	const auto n_rgs = rg_vec->size();
+
+	for (flatbuffers::uoffset_t i = 0; i < n_rgs; ++i) {
+		auto rowgroup_up = get_rowgroup_reader(static_cast<n_t>(i))->materialize();
+		CSV::to_csv(file_path, *rowgroup_up, rowgroup_up->m_descriptor);
+	}
+}
+
+void TableReader::to_csv(const string& file_path) const {
+	to_csv(path(file_path));
+}
+
+void TableReader::to_csv(const char* file_path) const {
+	to_csv(path(file_path));
+}
+
+TableReader::~TableReader() = default;
+
+TableReader::TableReader(const path& file_path, Connection& connection)
+    : m_connection(connection)
+    , m_file_path(file_path) {
+	FileFooter file_footer {};
+	FileHeader file_header {};
+
+	FileHeader::Load(file_header, file_path);
+	FileFooter::Load(file_footer, file_path);
+
+	if (file_header.settings.inline_footer) {
+		// Inline footer: read slice
+		m_table_descriptor_handle =
+		    make_table_descriptor(file_path, file_footer.table_descriptor_offset, file_footer.table_descriptor_size);
+	} else {
+		// External footer file
+		m_table_descriptor_handle = make_table_descriptor(file_path.parent_path() / TABLE_DESCRIPTOR_FILE_NAME);
+	}
+}
+
+up<RowgroupReader> TableReader::operator[](const n_t rowgroup_idx) const {
+	// Delegate to the helper to keep logic in one place
+	return get_rowgroup_reader(rowgroup_idx);
+}
+
+} // namespace fastlanes

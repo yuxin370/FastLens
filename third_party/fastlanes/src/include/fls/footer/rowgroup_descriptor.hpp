@@ -1,0 +1,28 @@
+// ────────────────────────────────────────────────────────
+// |                      FastLanes                       |
+// ────────────────────────────────────────────────────────
+// src/include/fls/footer/rowgroup_descriptor.hpp
+// ────────────────────────────────────────────────────────
+#ifndef FLS_FOOTER_ROWGROUP_DESCRIPTOR_HPP
+#define FLS_FOOTER_ROWGROUP_DESCRIPTOR_HPP
+
+#include "fls/api/api.hpp"
+#include "fls/footer/column_descriptor.hpp"
+#include "fls/footer/rowgroup_descriptor_generated.h"
+#include "fls/std/filesystem.hpp"
+
+namespace fastlanes {
+/*--------------------------------------------------------------------------------------------------------------------*/
+class Rowgroup;
+enum class DataType : uint8_t;
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+using col_description_it       = vector<up<ColumnDescriptorT>>::iterator;
+using const_col_description_it = vector<up<ColumnDescriptorT>>::const_iterator;
+
+FLS_API up<RowgroupDescriptorT> make_rowgroup_descriptor(const Rowgroup& rowgroup);
+FLS_API up<RowgroupDescriptorT> make_rowgroup_descriptor(const path& dir_path);
+
+} // namespace fastlanes
+
+#endif // FLS_FOOTER_ROWGROUP_DESCRIPTOR_HPP

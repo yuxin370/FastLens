@@ -1,0 +1,25 @@
+// ────────────────────────────────────────────────────────
+// |                      FastLanes                       |
+// ────────────────────────────────────────────────────────
+// data/include/data/fannie_mae.hpp
+// ────────────────────────────────────────────────────────
+#ifndef DATA_FANNIE_MAE_HPP
+#define DATA_FANNIE_MAE_HPP
+
+#include <array>
+#include <string>
+
+namespace fastlanes {
+using fannie_mae_dataset_t = std::array<std::pair<std::string_view, std::string_view>, 1>;
+
+class fannie_mae {
+public:
+	static constexpr std::string_view table_2024Q3 {FASTLANES_DATA_DIR "/fannie_mae/2024Q3"};
+
+	static constexpr fannie_mae_dataset_t dataset = {{
+	    {"table_2024Q3", table_2024Q3},
+	}};
+};
+} // namespace fastlanes
+
+#endif // DATA_FANNIE_MAE_HPP

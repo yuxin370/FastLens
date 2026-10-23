@@ -1,0 +1,26 @@
+add_library(fls_fsst12_prm
+            OBJECT
+           libfsst12.cpp)
+
+target_compile_definitions(fls_fsst12_prm PRIVATE IS_SCALAR)
+target_compile_options(fls_fsst12_prm PRIVATE "")
+if(ENABLE_IWYU)
+    set_target_properties(fls_fsst12_prm PROPERTIES CXX_INCLUDE_WHAT_YOU_USE ${iwyu_path})
+endif()
+set_target_properties(fls_fsst12_prm PROPERTIES CXX_CLANG_TIDY "")
+
+set(FASTLANES_OBJECT_FILES
+    ${FASTLANES_OBJECT_FILES} $<TARGET_OBJECTS:fls_fsst12_prm>
+    PARENT_SCOPE)
+
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+    target_compile_options(fls_fsst12_prm PRIVATE -Wno-macro-redefined)
+endif ()
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
+    target_compile_options(fls_fsst12_prm PRIVATE -Wno-array-bounds -Wno-stringop-overflow -Wno-stringop-overread)
+endif ()
+
+target_link_libraries(fls_fsst12_prm
+        PUBLIC
+        FastLanes::headers
+)

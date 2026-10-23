@@ -1,0 +1,26 @@
+// ────────────────────────────────────────────────────────
+// |                      FastLanes                       |
+// ────────────────────────────────────────────────────────
+// src/include/fls/encoder/encoder.hpp
+// ────────────────────────────────────────────────────────
+#ifndef FLS_ENCODER_ENCODER_HPP
+#define FLS_ENCODER_ENCODER_HPP
+
+#include "fls/api/api.hpp"
+#include "fls/encoder/encoding_options.hpp"
+#include "fls/std/filesystem.hpp"
+
+namespace fastlanes {
+/*--------------------------------------------------------------------------------------------------------------------*/
+class Connection;
+class Buf;
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+class FLS_API Encoder {
+public:
+	static void          encode(const Connection& connection, const path& file_path);
+	static EncodingStats encode(const Connection& connection, const path& file_path, const EncodingOptions& options);
+};
+} // namespace fastlanes
+
+#endif // FLS_ENCODER_ENCODER_HPP

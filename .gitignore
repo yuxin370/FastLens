@@ -1,0 +1,253 @@
+.idea
+thirdparty/*.tar*
+CMakeFiles/
+CMakeCache.txt
+CTestTestfile.cmake
+Makefile
+cmake_install.cmake
+build/
+*-build/
+Testing/
+build-support/boost_*
+# Build directories created by Clion
+cmake-build-*/
+data/decompress*
+skills
+
+#test 
+python/tests/
+build*/
+*.all
+*.ncu-rep
+*.nsys-rep
+*.sqlite
+
+#data
+data/fls/
+data/dct_blocks/
+
+# Publish the final PDF and plotting sources; keep local manuscript drafts private.
+fastlens/docs/*
+!fastlens/docs/paper/
+fastlens/docs/paper/*
+!fastlens/docs/paper/scripts/
+fastlens/docs/paper/scripts/*
+!fastlens/docs/paper/scripts/chart_style.py
+!fastlens/docs/paper/scripts/plot_matched_dct.py
+!fastlens/docs/paper/scripts/plot_compact_training.py
+!fastlens/docs/paper/scripts/plot_deployment.py
+!fastlens/docs/paper/scripts/plot_deployment_training.py
+!fastlens/docs/paper/scripts/plot_deployment_inference.py
+!fastlens/docs/paper/scripts/plot_training_resident_attainment.py
+!fastlens/docs/paper/scripts/plot_training_convergence.py
+!fastlens/docs/paper/scripts/plot_compact_staging.py
+!fastlens/docs/paper/scripts/plot_h2d_traffic.py
+!fastlens/docs/paper/scripts/plot_core_ablations.py
+!fastlens/docs/paper/scripts/plot_locality.py
+!fastlens/docs/paper/scripts/plot_read_bandwidth.py
+!fastlens/docs/paper/outputs/
+fastlens/docs/paper/outputs/*
+fastlens/data
+/fastlens/scripts/*
+!/fastlens/scripts/codegen/
+!/fastlens/scripts/codegen/**
+#########################################
+# Editor temporary/working/backup files #
+.#*
+*\#*\#
+[#]*#
+*~
+*$
+*.bak
+*flymake*
+*.kdev4
+*.log
+*.swp
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+#########################################
+# ignore tmp directory
+tmp
+
+######################################### from the fls_benchamrks integration
+.vagrant/
+*.pdf
+!fastlens/docs/paper/outputs/fastlens.pdf
+plot/*.log
+plot/*.tex
+.Rhistory
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# System files
+/.run
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
+
+# Project related
+/paper/dataset_lib/__pycache__
+/_deps
+/.cmake
+/.cache/
+*.ninja
+/test/local_result
+DartConfiguration.tcl
+paper/dataset_lib/compress_bi_py.db
+paper/dataset_lib/compress_bi_py.orc
+paper/dataset_lib/compress_bi_py.pq
+paper/dataset_lib/compress_bi_py.db
+paper/dataset_lib/compress_bi_py.orc
+DartConfiguration.tcl
+
+
+# CMake build
+cmake-build-python/
+# Python build artefacts
+*.egg-info/
+dist/
+build/
+
+# ─────────────────────────────────────────────────────────────
+# Rust build artifacts & lockfile
+# ─────────────────────────────────────────────────────────────
+
+# Everything in any target/ folder
+target/
+
+# If you ever run `cargo install --path .` it creates this
+.cargo/
+
+# Don’t commit the crate’s lockfile (library convention)
+/third_party/fastlanes/rust/Cargo.lock
+
+# VSCode’s Rust extension
+.vscode/
+
+# Rustfmt
+rustfmt.toml
+
+# Coverage reports
+coverage/
+
+# ─── build artifacts you never want committed or packed ───
+rust/target/
+skbuild-*/
+.idea/
+.venv/
+
+# Windows build artifacts
+build_win.bat
+cmake_output.txt
+build_win/
+
+# Content fingerprints cached beside large FASTLENS shard manifests.
+*.payload_fingerprints.json
+
+# FASTLENS local benchmark outputs (results, checkpoints, profiler exports)
+/benchmark_results/
+
+# Local raw experiment results; published tables live under benchmarks/paper/results.
+/results/
+# PCR experiments are kept outside this submission.
+/fastlens/benchmarks/baselines/pcr/
+/fastlens/benchmarks/baselines/pcr_tensorflow/
+/fastlens/benchmarks/profiling/INPUT_MOTIVATION.md
+
+# Generated FASTLENS documentation evidence; source reports remain visible
+/fastlens/benchmarks/baselines/system_rgbnomore/docs/artifacts/
+
+# Local FASTLENS benchmark outputs at the repository root
+/canonical_rgbnomore_index.csv
+/commands.json
+/contract.json
+/pipeline_*.json
+/report.md
+/results.*
+/run_metadata.json
+/sample_manifest.json
+/semantic_*.npz
+/validation.json
+
+# Local duplicate workspace files
+/CALUDE.md
+/fastlens/benchmarks/system_dct_major/docs/* copy.md
+
+# Local failure samples and review exports
+/failed.jpeg
+/review_exports/
+
+# Local tool configuration is not part of the research artifact.
+/.agents/
+/.aws/
+/.codex/
+/.claude/
+
+# Include only the FastLanes dependency and fixture-generation source needed here.
+/third_party/fastlanes/*
+!/third_party/fastlanes/CMakeLists.txt
+!/third_party/fastlanes/CHANGES.md
+!/third_party/fastlanes/LICENSE
+!/third_party/fastlanes/.clang-format
+!/third_party/fastlanes/.clang-tidy
+!/third_party/fastlanes/src/
+!/third_party/fastlanes/cmake/
+!/third_party/fastlanes/data/
+/third_party/fastlanes/data/*
+!/third_party/fastlanes/data/include/
+!/third_party/fastlanes/scripts/
+/third_party/fastlanes/scripts/*
+!/third_party/fastlanes/scripts/generate_synthetic_data.py
+!/third_party/fastlanes/scripts/generator_helpers/
+
+# Local development instructions, histories, and reports are not submission material.
+/AGENTS.md
+/fastlens/PYTHON_API_REFACTOR_PLAN.md
+/fastlens/benchmarks/CLEANUP.md
+/fastlens/benchmarks/development/historical/
+/fastlens/benchmarks/development/reports/
+/fastlens/benchmarks/development/tests/
+/fastlens/benchmarks/system_dct_major/docs/*
+!/fastlens/benchmarks/system_dct_major/docs/RUN_GUIDE.md
+!/fastlens/benchmarks/system_dct_major/docs/BLOCK_MAJOR_PLANLESS_DESIGN.md
+/fastlens/benchmarks/baselines/system_rgbnomore/docs/*
+!/fastlens/benchmarks/baselines/system_rgbnomore/docs/E2E_COMPARISON_RUN_GUIDE.md
+!/fastlens/benchmarks/baselines/system_rgbnomore/docs/TRAINING_BENCHMARK_RUN_GUIDE.md
+/fastlens/benchmarks/dct_models/EFUN_RESULTS_AND_TRAINING_ZH.md
+/fastlens/benchmarks/training_pls/SWINV2_FULL_BASELINE_RUNBOOK.md
+/fastlens/examples/image_order_benchmark/RESULTS_*.md
